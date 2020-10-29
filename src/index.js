@@ -4,7 +4,7 @@ import store from "./store";
 
 import "./index.css";
 function main () {
-    templates.generateBookmarkElement();
+    templates.render();
 }
 
 $(main)

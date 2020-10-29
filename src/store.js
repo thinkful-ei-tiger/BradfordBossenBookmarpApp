@@ -23,15 +23,19 @@ const store = {
   filter: 0
 };
 
-const getBookmark = function(id) {
+const pullElements = function () {
+  return store.bookmarks;
+};
+const findById = function(id) {
   store.bookmarks.forEach(function(element) {
     if(id === element.id){
-      console.log(element)
+      return element;
     }
   })
 }
 
 export default {
   store,
-  getBookmark
+  findById,
+  pullElements
 }
