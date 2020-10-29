@@ -1,15 +1,11 @@
 body {
+    display: flex;
+    justify-content: center;
     background-color: lightgrey;
 }
 
-body {
-    display: flex;
-    margin: 150px;
-
-
-}
-
 .container {
+    max-width: 500px;
     margin: 30px;
     border-style: solid;
     padding: 20px;
@@ -29,63 +25,68 @@ h1 {
 .buttons label {
     margin-left: 70px;
 }
-.initialView {
+.element {
     display: flex;
-    flex: row;
     border-style: solid;
     justify-content: center;
     
 }
-.initialView h4 {
-    padding-left: 80px;
+.element h4 {
+    flex: 1;
+    text-align: center;
 }
-.initialView h3 {
-    padding-right:80px;
-}
-.expandedView {
-    border-style: solid;
-}
-.titleHead {
-    display: flex;
-    flex: row;
-    justify-content: center;
-    background-color: gray;
-}
-.titleHead h3 {
-    padding-right: 80px
-}
-.titleHead button {
-    margin-left: 80px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-.linkContainer {
-    display: flex;
-    flex: row;
-    justify-content: center;
-}
+.element h3 {
+    flex: 1;
+    text-align: center;
+}   
 
-.linkContainer a {
-    padding-top: 20px;
-    padding-right: 60px;
-}
-.linkContainer h4 {
-    padding-left: 60px;
-}
-
-.expandedView p {
+.element p {
     margin: 27px;
     border-style: solid;
     padding: 10px;
 }
+.elementEx {
+    display: flex;
+    flex: row;
+    justify-content: space-around;
+    padding: 20px;
+    border: solid;
+}
+
+.elementEx .titleHead {
+    flex: 1;
+}
+
+.linkContainer {
+    text-align: center;
+    padding: 20px;
+    flex: 2;
+}
+
+.elementEx p {
+    border-style: solid;
+    padding: 7px;
+}
+
+
 .form {
     display: flex;
-
     border-style: solid;
     padding: 10px;
 }
 .form div {
-    padding: 10px
+    padding: 10px;
+}
+
+.newBookmark {
+    display: flex;
+    flex-direction: column;
+}
+.newBookmark label {
+    padding: 5px;
+}
+.newBookmark input {
+    max-width: 200px;
 }
 
 
