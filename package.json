@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-"scripts": {
-  "start": "webpack-dev-server", 
-  "build": "webpack --mode production"
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build": "webpack --mode production"
   },
   "keywords": [],
   "author": "",

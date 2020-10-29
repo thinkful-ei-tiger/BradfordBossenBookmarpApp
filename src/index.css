@@ -1,0 +1,94 @@
+body {
+    background-color: lightgrey;
+}
+
+body {
+    display: flex;
+    margin: 150px;
+    width: 600px;
+
+}
+
+.container {
+    margin: 30px;
+    border-style: solid;
+    padding: 20px;
+}
+h1 {
+    text-align: center;
+    margin-top: auto;
+}
+.buttons {
+    padding: 20px;
+    text-align: center;
+    border-style: solid;
+}
+.buttons button {
+    margin-right: 70px
+}
+.buttons label {
+    margin-left: 70px;
+}
+.initialView {
+    display: flex;
+    flex: row;
+    border-style: solid;
+    justify-content: center;
+    
+}
+.initialView h4 {
+    padding-left: 80px;
+}
+.initialView h3 {
+    padding-right:80px;
+}
+.expandedView {
+    border-style: solid;
+}
+.titleHead {
+    display: flex;
+    flex: row;
+    justify-content: center;
+    background-color: gray;
+}
+.titleHead h3 {
+    padding-right: 80px
+}
+.titleHead button {
+    margin-left: 80px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.linkContainer {
+    display: flex;
+    flex: row;
+    justify-content: center;
+}
+
+.linkContainer a {
+    padding-top: 20px;
+    padding-right: 60px;
+}
+.linkContainer h4 {
+    padding-left: 60px;
+}
+
+.expandedView p {
+    margin: 27px;
+    border-style: solid;
+    padding: 10px;
+}
+.form {
+    display: flex;
+
+    border-style: solid;
+    padding: 10px;
+}
+.form div {
+    padding: 10px
+}
+
+
+.description label {
+    vertical-align: top;
+}
