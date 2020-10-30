@@ -1,15 +1,14 @@
-import $ from 'jquery';
-import api from './api'
-import store from './store';
+import $ from "jquery";
+import api from "./api";
+import store from "./store";
 
-const generateBookmarkElement = function(element) {
-
-    let elementView = `<div class="element" data-item-id="${element.id}">
+const generateBookmarkElement = function (element) {
+  let elementView = `<div class="element" data-item-id="${element.id}">
                               <h3>${element.title}</h3><h4>Rating: ${element.rating}</h4>
                               <button type="button" name="expand" class="expand">+</button>
-                          </div>`
-    if (element.expanded === true) {
-        elementView = `<div class="element" id="elementEx" data-item-id="${element.id}">
+                          </div>`;
+  if (element.expanded === true) {
+    elementView = `<div class="element" id="elementEx" data-item-id="${element.id}">
                          <div class="titleHead">
                            <h3>${element.title}</h3>
                            <button class="delete">Delete</button>
@@ -21,12 +20,12 @@ const generateBookmarkElement = function(element) {
                             <p>${element.description}</p>
                             <button class="condense" type="button" name="condense">-</button>
                          </div>`;
-    }
-    return elementView
+  }
+  return elementView;
 };
 
-const generateBookmarkForm = function() {
-  if(store.store.adding === true) {
+const generateBookmarkForm = function () {
+  if (store.store.adding === true) {
     return `<div class="form">
           <form id="addBookmarkForm">
                 <div class="newBookmark">
@@ -55,72 +54,71 @@ const generateBookmarkForm = function() {
                 </div>
           </form>
       </div>`;
-     }
-     else {return ''}
-    }
-const generateBookmarkElementsString = function(elements) {
-      const elementString = elements.map((element) => generateBookmarkElement(element));
-      return elementString.join("");
-}
+  } else {
+    return "";
+  }
+};
+const generateBookmarkElementsString = function (elements) {
+  const elementString = elements.map((element) =>
+    generateBookmarkElement(element)
+  );
+  return elementString.join("");
+};
 
+const getElementId = function (element) {
+  return $(element).closest(".element").data("item-id");
+};
 
-const getElementId = function(element) {
-  return $(element).closest('.element').data('item-id');
-}
- 
-const handleNewButtonClick = function() {
-  $('.buttons').on('click', '.addElement', (event) => {
+const handleNewButtonClick = function () {
+  $(".buttons").on("click", ".addElement", (event) => {
     event.preventDefault();
     store.store.adding = true;
     render();
   });
-}
+};
 
-const handleCancelButtonClick = function (){
-  $('body').on('click', '#cancel', (e) => {
+const handleCancelButtonClick = function () {
+  $("body").on("click", "#cancel", (e) => {
     store.store.adding = false;
     render();
-  })
-}
+  });
+};
 
-const handleExpandClick = function (){
-  $('body').on('click', '.expand', (e) => {
+const handleExpandClick = function () {
+  $("body").on("click", ".expand", (e) => {
     e.preventDefault();
     let id = getElementId(e.currentTarget);
-    let element = store.findById(id)
+    let element = store.findById(id);
     element.expanded = true;
-    render()
-  })
-}
+    render();
+  });
+};
 const handleCollapseClick = function () {
-  $('body').on("click", ".condense", (e) => {
+  $("body").on("click", ".condense", (e) => {
     e.preventDefault();
     let id = getElementId(e.currentTarget);
-    console.log(id)
+    console.log(id);
     let element = store.findById(id);
     element.expanded = false;
     render();
   });
 };
 
-
-const render = function() {
-    let elements = store.pullElements();
-    const bookmarkElementsString = generateBookmarkForm() + generateBookmarkElementsString(elements);
-    $('.list').html(bookmarkElementsString);
-
-}
+const render = function () {
+  let elements = store.pullElements();
+  const bookmarkElementsString =
+    generateBookmarkForm() + generateBookmarkElementsString(elements);
+  $(".list").html(bookmarkElementsString);
+};
 
 const bindEventListeners = function () {
   handleNewButtonClick();
   handleCancelButtonClick();
   handleExpandClick();
   handleCollapseClick();
-}
-
-
+};
 
 export default {
   render,
-  bindEventListeners
+  bindEventListeners,
 };
