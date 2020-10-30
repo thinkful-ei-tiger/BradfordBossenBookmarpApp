@@ -34,7 +34,9 @@ const generateBookmarkForm = function () {
                   <label for="bookmarkLink">URL:</label>
                   <input type="text" name="bookmarkLink" class="bookmarkLink"required>
                 </div>
-                <p>Rating:<input type="radio" id="star5" name="rate" value="5" />
+                <div class="rating">
+                <p>Rating:
+                  <input type="radio" id="star5" name="rate" value="5" />
                   <label for="star5" title="text">5stars</label>
                   <input type="radio" id="star4" name="rate" value="4" />
                   <label for="star4" title="text">4stars</label>
@@ -44,12 +46,13 @@ const generateBookmarkForm = function () {
                   <label for="star2" title="text">2stars</label>
                   <input type="radio" id="star1" name="rate" value="1" />
                   <label for="star1" title="text">1star</label></p>
+                </div>
                 <div class="description">
                   <label for="description">Description:</label>
-                  <textarea id="txtarea" cols="45" rows="6" id="textbox" type="text" name="textbox" onkeypress="changeHead()" placeholder="Enter Text Here"></textarea>
+                  <textarea id="txtarea" cols="25" rows="6" id="textbox" type="text" name="textbox" placeholder="Enter Text Here"></textarea>
                 </div>
                 <div id="formBtn">
-                    <button type="submit" name="create">Create</button>
+                    <button type="submit" name="create" id="createBtn">Create</button>
                     <button id="cancel" type="reset" name="cancel">Cancel</button>
                 </div>
           </form>
@@ -97,10 +100,47 @@ const handleCollapseClick = function () {
   $("body").on("click", ".condense", (e) => {
     e.preventDefault();
     let id = getElementId(e.currentTarget);
-    console.log(id);
     let element = store.findById(id);
     element.expanded = false;
     render();
+  });
+};
+
+const handleCreateBtn = function () {
+  $("body").on("submit", "#addBookmarkForm", (e) => {
+    e.preventDefault();
+    let newElementTitle = $(".titleName").val();
+    let newElementUrl = $(".bookmarkLink").val();
+    let newRating = $("input[name='rate']:checked").val();
+    let newDesc = $(".description").val();
+    api.createElement(newElementTitle, newElementUrl, newDesc, newRating)
+      .then((newElement) => {
+        store.addElement(newElement);
+        console.log(newElement);
+        render();
+      })
+      .catch((error) => {
+        console.log(error)
+        store.setError(error.message);
+        renderError();
+      });
+  });
+};
+
+const handleDeleteBtn = function() {
+  $('body').on('click', '.delete', (e) => {
+    e.preventDefault();
+    const id = getElementId(e.currentTarget);
+    api.deleteElement(id)
+      .then(() => {
+        store.findAndDelete(id);
+        render();
+      })
+      .catch((error) => {
+        console.log(error);
+        store.setError(error.message);
+        renderError();
+      });
   });
 };
 
@@ -116,9 +156,12 @@ const bindEventListeners = function () {
   handleCancelButtonClick();
   handleExpandClick();
   handleCollapseClick();
+  handleCreateBtn();
+  handleDeleteBtn();
 };
 
 export default {
   render,
   bindEventListeners,
+  handleCreateBtn,
 };
