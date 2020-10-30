@@ -5,10 +5,11 @@ import store from './store';
 const generateBookmarkElement = function(element) {
 
     let elementView = `<div class="element" data-item-id="${element.id}">
-                              <h3>${element.title}</h3><h4>${element.rating}</h4>
+                              <h3>${element.title}</h3><h4>Rating: ${element.rating}</h4>
+                              <button type="button" name="expand" class="expand">+</button>
                           </div>`
     if (element.expanded === true) {
-        elementView = `<div class="elementEx" data-item-id="${element.id}">
+        elementView = `<div class="element" id="elementEx" data-item-id="${element.id}">
                          <div class="titleHead">
                            <h3>${element.title}</h3>
                            <button class="delete">Delete</button>
@@ -18,6 +19,7 @@ const generateBookmarkElement = function(element) {
                             <h4>Rating: ${element.rating}</h4>
                          </div>
                             <p>${element.description}</p>
+                            <button class="condense" type="button" name="condense">-</button>
                          </div>`;
     }
     return elementView
@@ -76,11 +78,30 @@ const handleNewButtonClick = function() {
 
 const handleCancelButtonClick = function (){
   $('body').on('click', '#cancel', (e) => {
-    console.log("WAAASAAAAAP");
     store.store.adding = false;
     render();
   })
 }
+
+const handleExpandClick = function (){
+  $('body').on('click', '.expand', (e) => {
+    e.preventDefault();
+    let id = getElementId(e.currentTarget);
+    let element = store.findById(id)
+    element.expanded = true;
+    render()
+  })
+}
+const handleCollapseClick = function () {
+  $('body').on("click", ".condense", (e) => {
+    e.preventDefault();
+    let id = getElementId(e.currentTarget);
+    console.log(id)
+    let element = store.findById(id);
+    element.expanded = false;
+    render();
+  });
+};
 
 
 const render = function() {
@@ -93,6 +114,8 @@ const render = function() {
 const bindEventListeners = function () {
   handleNewButtonClick();
   handleCancelButtonClick();
+  handleExpandClick();
+  handleCollapseClick();
 }
 
 

@@ -7,7 +7,7 @@ const store = {
       rating: 3,
       url: "http://www.title1.com",
       description: "lorem ipsum dolor sit",
-      expanded: true,
+      expanded: false,
     },
     {
       id: "6ffw",
@@ -27,11 +27,7 @@ const pullElements = function () {
   return store.bookmarks;
 };
 const findById = function(id) {
-  store.bookmarks.forEach(function(element) {
-    if(id === element.id){
-      return element;
-    }
-  })
+  return store.bookmarks.find((currentItem) => currentItem.id === id);
 }
 
 export default {
