@@ -4,7 +4,7 @@ import store from "./store";
 
 const generateBookmarkElement = function (element) {
   let elementView = `<div class="element" data-item-id="${element.id}">
-                              <h3>${element.title}</h3><h4>Rating: ${element.rating}</h4>
+                              <h3>${element.title}</h3><h4>Rate: ${element.rating}</h4>
                               <button type="button" name="expand" class="expand">+</button>
                           </div>`;
   if (element.expanded === true) {
@@ -15,9 +15,9 @@ const generateBookmarkElement = function (element) {
                          </div>
                          <div class="linkContainer">
                             <a href="${element.url}">Visit Site</a>
-                            <h4>Rating: ${element.rating}</h4>
-                         </div>
-                            <p>${element.description}</p>
+                            <h4>Rate ${element.rating}</h4>
+                          </div>
+                            <p>${element.desc}</p>
                             <button class="condense" type="button" name="condense">-</button>
                          </div>`;
   }
@@ -32,7 +32,7 @@ const generateBookmarkForm = function () {
                   <label for="titleName"> Title:</label>
                   <input type="text" name="titleName" class="titleName" required>
                   <label for="bookmarkLink">URL:</label>
-                  <input type="text" name="bookmarkLink" class="bookmarkLink"required>
+                  <input type="url" placeholder="https://www.domain.com" value="https://www." name="bookmarkLink" class="bookmarkLink" required>
                 </div>
                 <div class="rating">
                 <p>Rating:
@@ -40,7 +40,7 @@ const generateBookmarkForm = function () {
                   <label for="star5" title="text">5stars</label>
                   <input type="radio" id="star4" name="rate" value="4" />
                   <label for="star4" title="text">4stars</label>
-                  <input type="radio" id="star3" name="rate" value="3" />
+                  <input type="radio" id="star3" name="rate" value="3" checked/>
                   <label for="star3" title="text">3stars</label>
                   <input type="radio" id="star2" name="rate" value="2" />
                   <label for="star2" title="text">2stars</label>
@@ -49,7 +49,7 @@ const generateBookmarkForm = function () {
                 </div>
                 <div class="description">
                   <label for="description">Description:</label>
-                  <textarea id="txtarea" cols="25" rows="6" id="textbox" type="text" name="textbox" placeholder="Enter Text Here"></textarea>
+                  <textarea id="txtarea" cols="25" rows="6" type="text" name="textbox" placeholder="Enter Text Here">No description</textarea>
                 </div>
                 <div id="formBtn">
                     <button type="submit" name="create" id="createBtn">Create</button>
@@ -112,40 +112,51 @@ const handleCreateBtn = function () {
     let newElementTitle = $(".titleName").val();
     let newElementUrl = $(".bookmarkLink").val();
     let newRating = $("input[name='rate']:checked").val();
-    let newDesc = $(".description").val();
-    api.createElement(newElementTitle, newElementUrl, newDesc, newRating)
+    let newDesc = $("#txtarea").val();
+    console.log(newDesc)
+    api
+      .createElement(newElementTitle, newElementUrl, newDesc, newRating)
       .then((newElement) => {
         store.addElement(newElement);
-        console.log(newElement);
+        store.store.adding = false;
         render();
       })
       .catch((error) => {
-        console.log(error)
-        store.setError(error.message);
+        console.log(error);
+        store.store.setError(error.message);
         renderError();
       });
   });
 };
 
-const handleDeleteBtn = function() {
-  $('body').on('click', '.delete', (e) => {
+const handleDeleteBtn = function () {
+  $("body").on("click", ".delete", (e) => {
     e.preventDefault();
     const id = getElementId(e.currentTarget);
-    api.deleteElement(id)
+    api
+      .deleteElement(id)
       .then(() => {
         store.findAndDelete(id);
         render();
       })
       .catch((error) => {
         console.log(error);
-        store.setError(error.message);
+        store.store.setError(error.message);
         renderError();
       });
   });
 };
 
+const handleFilter = function () {
+  $(".container").on("change", "#filterBy", (e) => {
+    e.preventDefault();
+    store.store.filter = $("#filterBy").val();
+    render();
+  });
+};
+
 const render = function () {
-  let elements = store.pullElements();
+  let elements = store.pullFilterElements(store.store.filter);
   const bookmarkElementsString =
     generateBookmarkForm() + generateBookmarkElementsString(elements);
   $(".list").html(bookmarkElementsString);
@@ -158,6 +169,7 @@ const bindEventListeners = function () {
   handleCollapseClick();
   handleCreateBtn();
   handleDeleteBtn();
+  handleFilter();
 };
 
 export default {

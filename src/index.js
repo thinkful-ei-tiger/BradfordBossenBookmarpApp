@@ -7,7 +7,9 @@ import api from "./api";
 function main() {
   api.getElements()
     .then((elements) => {
-        elements.forEach((element) => store.addElement(element));
+        elements.forEach((element) => {
+            store.addElement(element)
+        });
         templates.render();
     });
   templates.bindEventListeners();

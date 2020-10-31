@@ -21,6 +21,9 @@ const listFetch = function (...args) {
         return Promise.reject(error);
       }
       return data;
+    })
+    .catch((error) => {
+      alert("Something went wrong, " + error.message);
     });
 };
 const getElements = function () {
@@ -32,23 +35,23 @@ const createElement = function (title, url, desc, rating) {
     title: title,
     url: url,
     desc: desc,
-    rating: rating
+    rating: rating,
   };
   return listFetch(`${baseUrl}/${userName}/bookmarks`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(newElement)
+    body: JSON.stringify(newElement),
   });
 };
 
-const deleteElement = function(id) {
-    return listFetch(`${baseUrl}/${userName}/bookmarks/${id}`, {
-      method: "DELETE",
-    });
-}
+const deleteElement = function (id) {
+  return listFetch(`${baseUrl}/${userName}/bookmarks/${id}`, {
+    method: "DELETE",
+  });
+};
 
 export default {
   getElements,
   createElement,
-  deleteElement
+  deleteElement,
 };

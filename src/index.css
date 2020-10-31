@@ -1,11 +1,10 @@
 body {
   display: flex;
-  justify-content: center;
   background-color: lightgrey;
+  justify-content: center;
 }
 
 .container {
-  max-width: 500px;
   margin: 30px;
   border-style: solid;
   padding: 20px;
@@ -13,20 +12,35 @@ body {
 h1 {
   text-align: center;
   margin-top: auto;
+  flex: 1;
 }
 .buttons {
+  display: flex;
+  justify-content: center;
   padding: 20px;
-  text-align: center;
+
   border-style: solid;
 }
+.dropDown{
+  display: flex;
+}
 .buttons button {
-  margin-right: 70px;
+  flex:1;
+  height: 30px;
+  width: 90px;
 }
 .buttons label {
-  margin-left: 70px;
+ flex: 1;
+ margin-left: 20px;
+ margin-right: 10px;
+}
+#filterBy {
+  flex: 1;
+  height: 25px;
 }
 .element {
   display: flex;
+  max-width: 400px;
   border-style: solid;
   justify-content: center;
 }
@@ -46,25 +60,30 @@ h1 {
 }
 #elementEx {
   display: flex;
-  flex: row;
   justify-content: space-around;
-  padding: 20px;
   border: solid;
+  width: 350px
 }
+
 
 #elementEx .titleHead {
   flex: 1;
+  margin-left: 10px;
 }
 
 .linkContainer {
   text-align: center;
-  padding: 20px;
-  flex: 2;
+  flex: 1;
+  margin-left: 15px;
+  margin-top: 20px;
 }
 
 #elementEx p {
   border-style: solid;
   padding: 7px;
+  width: 170px;
+  margin-top: 8px;
+  font-weight: bolder;
 }
 
 .form {
@@ -95,9 +114,8 @@ h1 {
   margin: 20px;
 }
 .condense {
-  margin-top: 50px;
-  margin-bottom: 50px;
-  margin-left: 20px;
+  margin: auto;
+  margin-right: 20px;
   width: 24px;
   height: 24px;
 }
